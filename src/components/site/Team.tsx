@@ -1,112 +1,9 @@
 import { useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { Linkedin, X } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
 import { Reveal } from "./Reveal";
-
-type Member = { name: string; role: string; img: string; bio: string; zoom?: boolean };
-type Dept = { title: string; members: Member[] };
-
-const departments: Dept[] = [
-  {
-    title: "Architectural Staff",
-    members: [
-      {
-        name: "Henry Musangi",
-        role: "Managing Director",
-        img: "/assets/images/staff/HENRY-MUSANGI-Copy.jpg",
-        bio: "Henry leads Planning Systems Services with three decades of experience shaping civic, commercial and residential architecture across East Africa. He balances rigorous planning discipline with a quiet, contextual design sensibility, guiding the practice's long-term vision and client relationships.",
-      },
-      {
-        name: "Mumo Musuva",
-        role: "Director",
-        img: "/assets/images/staff/MUMO-MUSUVA-min.jpg",
-        bio: "Mumo brings deep expertise in large-scale architectural delivery, overseeing complex briefs from concept through completion. His work focuses on integrating environmental responsibility with the cultural and material context of each site.",
-      },
-      {
-        name: "Susan Makhulo",
-        role: "Studio Director",
-        img: "/assets/images/staff/sus-min.jpg",
-        bio: "Susan directs the studio's day-to-day creative output, ensuring every project meets the practice's standards for craft and clarity. She mentors emerging architects and shapes the design culture across all four divisions.",
-      },
-      {
-        name: "Michael Kinyumu",
-        role: "Associate Director",
-        img: "/assets/images/staff/MICHAELKINYUMU-min.jpg",
-        bio: "Michael partners with clients on commercial and institutional projects, translating ambitious programmes into buildable, beautifully detailed architecture. His leadership pairs technical precision with a calm, collaborative approach.",
-      },
-      {
-        name: "Felix Kawuondi",
-        role: "Licentiate Architect",
-        img: "/assets/images/staff/felix.png",
-        bio: "Felix contributes to design development and documentation across a range of residential and mixed-use projects. He is interested in the intersection of vernacular building traditions and contemporary practice.",
-        zoom: true,
-      },
-    ],
-  },
-  {
-    title: "Arts & Graphics",
-    members: [
-      {
-        name: "William Omondi",
-        role: "Graphics Lead",
-        img: "/assets/images/staff/William-Omondi2-min.jpg",
-        bio: "William shapes how Planning Systems' work is communicated — from project visualisations and presentation books to wayfinding and brand systems. His craft brings precision and warmth to every visual the studio sends out.",
-      },
-    ],
-  },
-  {
-    title: "Finance",
-    members: [
-      {
-        name: "Moses Kinyanjui",
-        role: "Director of Finance and Operations",
-        img: "/assets/images/staff/Moses-min.jpg",
-        bio: "Moses oversees the firm's financial strategy and operational health, keeping projects resourced and the business resilient. His steady stewardship gives the design teams the freedom to focus on the work.",
-      },
-      {
-        name: "Dennis Kirimi",
-        role: "Senior Accountant",
-        img: "/assets/images/staff/Dennis-Kirimi-Copy-scaled.jpg",
-        bio: "Dennis manages the day-to-day accounting and reporting that keep every project on solid financial footing. He is known across the studio for his accuracy and quiet reliability.",
-      },
-    ],
-  },
-  {
-    title: "Human Resources & Administration",
-    members: [
-      {
-        name: "Victoria Awiti",
-        role: "Associate Director, HR",
-        img: "/assets/images/staff/Victoria-Awiti-Copy.jpg",
-        bio: "Victoria leads people and culture at Planning Systems, building the structures that support a multidisciplinary studio. Her work spans recruitment, professional development and the rituals that keep the team connected.",
-      },
-      {
-        name: "Ednah Mueni",
-        role: "Administrative Assistant",
-        img: "/assets/images/staff/ednah.png",
-        bio: "Ednah keeps the studio running smoothly, coordinating logistics, hospitality and the small daily details that make the office feel like a workshop.",
-        zoom: true,
-      },
-    ],
-  },
-  {
-    title: "Information Technology",
-    members: [
-      {
-        name: "Chris Sigoli",
-        role: "Head of Digital",
-        img: "/assets/images/staff/Chris-min.jpg",
-        bio: "Chris leads the firm's digital infrastructure and design technology — from BIM workflows and visualisation pipelines to the systems that connect the studio's four divisions. His work quietly powers everything the practice ships.",
-      },
-      {
-        name: "Eric Ngugi",
-        role: "Assistant IT",
-        img: "/assets/images/staff/2023-09-29/Eric Ngugi.png",
-        bio: "Eric supports the studio's hardware, software and design-tech needs, keeping every workstation, plotter and server humming. He is the team's first call when technology gets in the way of design.",
-      },
-    ],
-  },
-];
+import { Link } from "@tanstack/react-router";
+import { departments, Member } from "@/data/team";
 
 export function Team() {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
@@ -180,7 +77,7 @@ function MemberCard({ m, delay, onClick }: { m: Member; delay: number; onClick: 
         type="button"
         onClick={onClick}
         aria-label={`Open profile for ${m.name}`}
-        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-2xl"
+        className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 rounded-2xl cursor-pointer"
       >
         <div className="relative overflow-hidden rounded-2xl aspect-[4/5] bg-white/5">
           <img
@@ -230,18 +127,19 @@ function MemberDialog({ m, onClose }: { m: Member; onClose: () => void }) {
           {m.bio}
         </p>
         <div className="mt-7">
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/25 text-white/90 text-xs tracking-[0.2em] uppercase hover:bg-white/10 transition-colors"
+          <Link
+            to="/team/$slug"
+            params={{ slug: m.slug }}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/25 text-white/90 text-xs tracking-[0.2em] uppercase hover:bg-white/10 transition-colors"
           >
-            <Linkedin className="h-3.5 w-3.5" />
-            LinkedIn
-          </a>
+            View Their Full Story
+            <ArrowRight className="h-3.5 w-3.5 animate-pulse" />
+          </Link>
         </div>
       </div>
       <DialogPrimitive.Close
         onClick={onClose}
-        className="absolute -top-2 -right-2 md:top-0 md:right-0 h-9 w-9 rounded-full border border-white/25 bg-white/10 text-white/90 flex items-center justify-center hover:bg-white/20 transition-colors"
+        className="absolute -top-2 -right-2 md:top-0 md:right-0 h-9 w-9 rounded-full border border-white/25 bg-white/10 text-white/90 flex items-center justify-center hover:bg-white/20 transition-colors cursor-pointer"
         aria-label="Close"
       >
         <X className="h-4 w-4" />

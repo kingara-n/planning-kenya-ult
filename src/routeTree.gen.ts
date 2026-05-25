@@ -17,9 +17,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdventureRouteImport } from './routes/adventure'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TeamIndexRouteImport } from './routes/team.index'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
 import { Route as AdventureIndexRouteImport } from './routes/adventure.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as TeamSlugRouteImport } from './routes/team.$slug'
 import { Route as PortfolioCategoryRouteImport } from './routes/portfolio.$category'
 import { Route as AdventureSlugRouteImport } from './routes/adventure.$slug'
 import { Route as AdminStaffRouteImport } from './routes/admin.staff'
@@ -69,6 +71,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TeamIndexRoute = TeamIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => TeamRoute,
+} as any)
 const PortfolioIndexRoute = PortfolioIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -83,6 +90,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const TeamSlugRoute = TeamSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => TeamRoute,
 } as any)
 const PortfolioCategoryRoute = PortfolioCategoryRouteImport.update({
   id: '/$category',
@@ -134,16 +146,18 @@ export interface FileRoutesByFullPath {
   '/csr': typeof CsrRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/story': typeof StoryRoute
-  '/team': typeof TeamRoute
+  '/team': typeof TeamRouteWithChildren
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/staff': typeof AdminStaffRoute
   '/adventure/$slug': typeof AdventureSlugRoute
   '/portfolio/$category': typeof PortfolioCategoryRouteWithChildren
+  '/team/$slug': typeof TeamSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/adventure/': typeof AdventureIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
+  '/team/': typeof TeamIndexRoute
   '/portfolio/$category/$project': typeof PortfolioCategoryProjectRoute
   '/portfolio/$category/': typeof PortfolioCategoryIndexRoute
 }
@@ -152,15 +166,16 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/csr': typeof CsrRoute
   '/story': typeof StoryRoute
-  '/team': typeof TeamRoute
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/staff': typeof AdminStaffRoute
   '/adventure/$slug': typeof AdventureSlugRoute
+  '/team/$slug': typeof TeamSlugRoute
   '/admin': typeof AdminIndexRoute
   '/adventure': typeof AdventureIndexRoute
   '/portfolio': typeof PortfolioIndexRoute
+  '/team': typeof TeamIndexRoute
   '/portfolio/$category/$project': typeof PortfolioCategoryProjectRoute
   '/portfolio/$category': typeof PortfolioCategoryIndexRoute
 }
@@ -173,16 +188,18 @@ export interface FileRoutesById {
   '/csr': typeof CsrRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/story': typeof StoryRoute
-  '/team': typeof TeamRoute
+  '/team': typeof TeamRouteWithChildren
   '/admin/adventures': typeof AdminAdventuresRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/projects': typeof AdminProjectsRoute
   '/admin/staff': typeof AdminStaffRoute
   '/adventure/$slug': typeof AdventureSlugRoute
   '/portfolio/$category': typeof PortfolioCategoryRouteWithChildren
+  '/team/$slug': typeof TeamSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/adventure/': typeof AdventureIndexRoute
   '/portfolio/': typeof PortfolioIndexRoute
+  '/team/': typeof TeamIndexRoute
   '/portfolio/$category/$project': typeof PortfolioCategoryProjectRoute
   '/portfolio/$category/': typeof PortfolioCategoryIndexRoute
 }
@@ -203,9 +220,11 @@ export interface FileRouteTypes {
     | '/admin/staff'
     | '/adventure/$slug'
     | '/portfolio/$category'
+    | '/team/$slug'
     | '/admin/'
     | '/adventure/'
     | '/portfolio/'
+    | '/team/'
     | '/portfolio/$category/$project'
     | '/portfolio/$category/'
   fileRoutesByTo: FileRoutesByTo
@@ -214,15 +233,16 @@ export interface FileRouteTypes {
     | '/contact'
     | '/csr'
     | '/story'
-    | '/team'
     | '/admin/adventures'
     | '/admin/login'
     | '/admin/projects'
     | '/admin/staff'
     | '/adventure/$slug'
+    | '/team/$slug'
     | '/admin'
     | '/adventure'
     | '/portfolio'
+    | '/team'
     | '/portfolio/$category/$project'
     | '/portfolio/$category'
   id:
@@ -241,9 +261,11 @@ export interface FileRouteTypes {
     | '/admin/staff'
     | '/adventure/$slug'
     | '/portfolio/$category'
+    | '/team/$slug'
     | '/admin/'
     | '/adventure/'
     | '/portfolio/'
+    | '/team/'
     | '/portfolio/$category/$project'
     | '/portfolio/$category/'
   fileRoutesById: FileRoutesById
@@ -256,7 +278,7 @@ export interface RootRouteChildren {
   CsrRoute: typeof CsrRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
   StoryRoute: typeof StoryRoute
-  TeamRoute: typeof TeamRoute
+  TeamRoute: typeof TeamRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -317,6 +339,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/team/': {
+      id: '/team/'
+      path: '/'
+      fullPath: '/team/'
+      preLoaderRoute: typeof TeamIndexRouteImport
+      parentRoute: typeof TeamRoute
+    }
     '/portfolio/': {
       id: '/portfolio/'
       path: '/'
@@ -337,6 +366,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/team/$slug': {
+      id: '/team/$slug'
+      path: '/$slug'
+      fullPath: '/team/$slug'
+      preLoaderRoute: typeof TeamSlugRouteImport
+      parentRoute: typeof TeamRoute
     }
     '/portfolio/$category': {
       id: '/portfolio/$category'
@@ -456,6 +492,18 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
   PortfolioRouteChildren,
 )
 
+interface TeamRouteChildren {
+  TeamSlugRoute: typeof TeamSlugRoute
+  TeamIndexRoute: typeof TeamIndexRoute
+}
+
+const TeamRouteChildren: TeamRouteChildren = {
+  TeamSlugRoute: TeamSlugRoute,
+  TeamIndexRoute: TeamIndexRoute,
+}
+
+const TeamRouteWithChildren = TeamRoute._addFileChildren(TeamRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -464,7 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   CsrRoute: CsrRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
   StoryRoute: StoryRoute,
-  TeamRoute: TeamRoute,
+  TeamRoute: TeamRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
