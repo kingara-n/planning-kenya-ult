@@ -259,12 +259,12 @@
 
 /* Liquid-glass dialog */
 @keyframes pk-backdrop-in {
-  from { opacity: 0; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
-  to   { opacity: 1; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 @keyframes pk-backdrop-out {
-  from { opacity: 1; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-  to   { opacity: 0; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
+  from { opacity: 1; }
+  to   { opacity: 0; }
 }
 @keyframes pk-pop-in {
   0%   { opacity: 0; transform: scale(0.96) translateY(12px); }
@@ -276,9 +276,9 @@
 }
 .pk-backdrop-blur {
   background: radial-gradient(ellipse at center, rgba(0,0,0,0.85), rgba(0,0,0,0.96));
-  backdrop-filter: blur(24px) saturate(110%);
-  -webkit-backdrop-filter: blur(24px) saturate(110%);
-  animation: pk-backdrop-in 0.5s cubic-bezier(.2,.7,.15,1) both;
+  backdrop-filter: blur(32px) saturate(110%);
+  -webkit-backdrop-filter: blur(32px) saturate(110%);
+  animation: pk-backdrop-in 0.4s cubic-bezier(.2,.7,.15,1) both;
 }
 .pk-backdrop-blur[data-state="closed"] {
   animation: pk-backdrop-out 0.4s cubic-bezier(.4,0,.6,1) both;
