@@ -1,10 +1,98 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { CtaLink } from "@/components/site/CtaLink";
 import heroImg from "@/assets/hero-nairobi.jpg";
 import tower from "@/assets/project-tower.jpg";
+
+const slideshow1 = [
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/LONRHO HOUSE/IMAGES/LONRHO 3.jpg",
+    title: "Lonrho House, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/NATION CENTRE/IMAGES/DSC_4533 cropped.jpg",
+    title: "Nation Centre, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/CITIBANK UPPERHILL/IMAGES/citi40.jpg",
+    title: "Citibank Upperhill, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/I&M LIMURU ROAD/IMAGES/1594546463898.jpg",
+    title: "I&M Limuru Road, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/KENYA COMMERCIAL BANK HQ/IMAGES/IMG_0584.jpg",
+    title: "Kenya Commercial Bank HQ, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/I&M KIGALI/IMAGES/back facade_.jpg",
+    title: "I&M Bank, Kigali",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/THE ATRIUM, 2010/IMAGES/1 copy-1.jpg",
+    title: "The Atrium, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/DIAMOND TRUST BANK, Proposal/IMAGES/1.jpg",
+    title: "Diamond Trust Bank, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/TEMPLETON HOUSE, 2019/IMAGES/TEMPLETON FRONT VIEW.jpg",
+    title: "Templeton House, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/RETAIL/KAREN WATERFRONT, 2020/IMAGES/KAREN EXTERIOR_5.2.jpg",
+    title: "Karen Waterfront, Nairobi",
+  },
+];
+
+const slideshow2 = [
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/SERENA BEACH HOTEL AND SPA SHANZU/IMAGES/01 - Exterior View over the Pool(2).jpg",
+    title: "Mombasa Serena Beach Hotel & Spa",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/BWEJU RESORT, ZANZIBAR/IMAGES/1.jpg",
+    title: "Bweju Resort, Zanzibar",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/ELSA KOPJE, MERU NATIONAL PARK/IMAGES/ELSA KOPJE SWIMMING POOLSIDE IMG.jpg",
+    title: "Elsa Kopje, Meru National Park",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/FOUR POINT SHERATON JKIA/IMAGES/4 POINTS JKIA IN THE EVENING.jpg",
+    title: "Four Points by Sheraton JKIA, Nairobi",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/ENGLISH POINT MARINA/IMAGES/1.jpg",
+    title: "English Point Marina, Mombasa",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/HOSPITALITY/EMAKOKO LODGE/IMAGES/EMAKOKO LODGE BAR.JPG",
+    title: "Emakoko Lodge, Nairobi National Park",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/EDUCATION/AGA KHAN MSA, 2005 - 2012/IMAGES/AGA KHAN ACADEMY MOMBASA EXTERIOR 1.jpg",
+    title: "Aga Khan Academy, Mombasa",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/EDUCATION/MPESA FOUNDATION ACADEMY, 2019/IMAGES/PSS_6209.jpg",
+    title: "M-Pesa Foundation Academy, Thika",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/ARTS AND CULTURE/Mama Ngina Waterfront, 2019/IMAGES/Gateway.jpg",
+    title: "Mama Ngina Waterfront, Mombasa",
+  },
+  {
+    src: "/assets/images/2024/SECTOR PROFILES/RESIDENTIAL/OCEAN SEVEN, 2020/IMAGES/33.jpg",
+    title: "Ocean Seven, Kikambala",
+  },
+];
+
 
 export const Route = createFileRoute("/story")({
   component: Page,
@@ -54,6 +142,23 @@ const landmarks = [
 ];
 
 function Page() {
+  const [slideIndex1, setSlideIndex1] = useState(0);
+  const [slideIndex2, setSlideIndex2] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex1((prev) => (prev + 1) % slideshow1.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex2((prev) => (prev + 1) % slideshow2.length);
+    }, 1500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <main className="bg-background min-h-screen text-white overflow-hidden">
       <Nav />
@@ -285,24 +390,46 @@ function Page() {
         <div className="grid md:grid-cols-2 gap-6 md:gap-8 mt-20 max-w-7xl mx-auto">
           <Reveal>
             <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "16 / 10" }}>
-              <img
-                src="/assets/images/2024/SECTOR PROFILES/CORPORATE OFFICES/LONRHO HOUSE/IMAGES/LONRHO 3.jpg"
-                alt="Lonrho House"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              <p className="absolute bottom-6 left-6 text-white font-light text-xl">Lonrho House, Nairobi</p>
+              {slideshow1.map((slide, i) => (
+                <div
+                  key={slide.src}
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    i === slideIndex1 ? "opacity-100 z-10" : "opacity-0 z-0"
+                  }`}
+                >
+                  <img
+                    src={slide.src}
+                    alt={slide.title}
+                    className="absolute inset-0 h-full w-full object-cover animate-scale-subtle"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                  <p className="absolute bottom-6 left-6 text-white font-light text-xl tracking-wide">
+                    {slide.title}
+                  </p>
+                </div>
+              ))}
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div className="relative overflow-hidden rounded-2xl" style={{ aspectRatio: "16 / 10" }}>
-              <img
-                src="/assets/images/2024/SECTOR PROFILES/HOSPITALITY/SERENA BEACH HOTEL AND SPA SHANZU/IMAGES/01 - Exterior View over the Pool(2).jpg"
-                alt="Mombasa Serena Beach Hotel & Spa"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-              <p className="absolute bottom-6 left-6 text-white font-light text-xl">Mombasa Serena Beach Hotel & Spa</p>
+              {slideshow2.map((slide, i) => (
+                <div
+                  key={slide.src}
+                  className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                    i === slideIndex2 ? "opacity-100 z-10" : "opacity-0 z-0"
+                  }`}
+                >
+                  <img
+                    src={slide.src}
+                    alt={slide.title}
+                    className="absolute inset-0 h-full w-full object-cover animate-scale-subtle"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+                  <p className="absolute bottom-6 left-6 text-white font-light text-xl tracking-wide">
+                    {slide.title}
+                  </p>
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>

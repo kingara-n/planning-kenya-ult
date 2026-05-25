@@ -1,5 +1,5 @@
-import { useEffect, useState, type MouseEvent } from "react";
-import { Link } from "@tanstack/react-router";
+import { useEffect, useState, useRef, type MouseEvent } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
 import { Menu, X } from "lucide-react";
 import logo from "@/assets/planning-logo-white.png";
 
@@ -23,6 +23,7 @@ export function Nav() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.search.includes("open-menu")) {
@@ -32,20 +33,42 @@ export function Nav() {
 
   useEffect(() => {
     let lastY = window.scrollY;
+    const isHome = location.pathname === "/";
+
     const onScroll = () => {
       // If menu is open, don't hide the nav bar
       if (isMenuOpen) return;
-      
+
       const y = window.scrollY;
       const vh = window.innerHeight;
+      
+      // Update scrolled state for styling
       setScrolled(y > 40);
-      if (y > vh * 0.9 && y > lastY) setHidden(true);
-      else if (y < lastY - 4 || y < vh * 0.6) setHidden(false);
+
+      if (isHome) {
+        // Home page: hide only when scrolled deep, show on scroll-up or top
+        if (y > vh * 0.9 && y > lastY) {
+          setHidden(true);
+        } else if (y < lastY - 4 || y < vh * 0.6) {
+          setHidden(false);
+        }
+      } else {
+        // Other pages: reveal on any scroll-up, hide on scroll-down
+        if (y < 120) {
+          setHidden(false);
+        } else if (y > lastY) {
+          setHidden(true);
+        } else if (y < lastY - 4) {
+          setHidden(false);
+        }
+      }
+
       lastY = y;
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [isMenuOpen]);
+  }, [isMenuOpen, location.pathname]);
 
   // Close menu when clicking anywhere outside of the mobile nav trigger wrapper
   useEffect(() => {

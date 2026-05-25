@@ -109,7 +109,7 @@ function CategoryCard({
       <div className="absolute inset-x-0 bottom-0 p-8 md:p-10 flex items-end justify-between gap-6">
         <div className="pk-project-text">
           <p className="text-white/70 text-[11px] tracking-[0.3em] uppercase mb-3">
-            {String(index + 1).padStart(2, "0")} · {count} Projects
+            {String(index + 1).padStart(2, "0")}
           </p>
           <h3 className="text-white font-extralight text-3xl md:text-4xl leading-tight">
             {title}
