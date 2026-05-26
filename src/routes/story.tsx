@@ -155,7 +155,7 @@ function Page() {
   useEffect(() => {
     const timer = setInterval(() => {
       setSlideIndex2((prev) => (prev + 1) % slideshow2.length);
-    }, 1500);
+    }, 4000);
     return () => clearInterval(timer);
   }, []);
 
