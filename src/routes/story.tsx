@@ -130,17 +130,6 @@ const milestones = [
   { year: "Today", title: "Third Generation", body: "Led by Managing Director Henry Musangi across Nairobi and Mombasa, focused on resilience, climate-conscious design and urban transformation." },
 ];
 
-const landmarks = [
-  { name: "Lonrho House", city: "Nairobi" },
-  { name: "Nation Centre", city: "Nairobi" },
-  { name: "I&M Bank Tower", city: "Nairobi" },
-  { name: "KCB Pension Tower", city: "Nairobi" },
-  { name: "Fedha Towers", city: "Nairobi" },
-  { name: "Trade & Development Bank HQ", city: "Nairobi" },
-  { name: "Mombasa Serena Beach Hotel & Spa", city: "Mombasa" },
-  { name: "Four Points by Sheraton JKIA", city: "Nairobi" },
-];
-
 function Page() {
   const [slideIndex1, setSlideIndex1] = useState(0);
   const [slideIndex2, setSlideIndex2] = useState(0);
@@ -264,28 +253,6 @@ function Page() {
             </Reveal>
           </div>
 
-          {/* Landmarks strip */}
-          <Reveal delay={120}>
-            <p className="text-white/50 text-xs tracking-[0.3em] mb-8">SELECTED LANDMARKS</p>
-          </Reveal>
-          <ul className="border-t border-hairline mb-24">
-            {landmarks.map((l, i) => (
-              <Reveal key={l.name} delay={i * 80}>
-                <li className="border-b border-hairline py-6 md:py-8 flex items-baseline justify-between gap-6 group">
-                  <span className="text-white/40 text-sm font-light tracking-[0.2em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    className="flex-1 text-white font-extralight leading-none transition-transform duration-500 group-hover:translate-x-2"
-                    style={{ fontWeight: 200, fontSize: "clamp(1.75rem, 3.5vw, 3rem)" }}
-                  >
-                    {l.name}
-                  </span>
-                  <span className="text-white/50 text-xs tracking-[0.25em] uppercase">{l.city}</span>
-                </li>
-              </Reveal>
-            ))}
-          </ul>
 
           {/* Timeline */}
           <Reveal>
