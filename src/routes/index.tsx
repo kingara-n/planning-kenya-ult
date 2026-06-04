@@ -30,8 +30,8 @@ function Index() {
       <Hero />
       <About />
       <Divisions />
-      <Projects />
       <Sectors />
+      <Projects />
       <Stats />
       <ContactCta />
       <Footer />

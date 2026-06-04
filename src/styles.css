@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -145,10 +146,21 @@
   }
 
   html, body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: 'Montserrat', 'Inter', system-ui, -apple-system, sans-serif;
+    background-image: linear-gradient(to bottom, oklch(0.65 0.14 254.5) 0%, var(--background-deep) 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
     background-color: var(--background);
     color: var(--foreground);
     -webkit-font-smoothing: antialiased;
+  }
+
+  main,
+  section.bg-background,
+  section.bg-background-deep,
+  footer.bg-background-deep {
+    background-color: transparent !important;
   }
 }
 
@@ -330,3 +342,112 @@ main {
 
 /* Smooth scroll fallback when Lenis hasn't booted yet */
 html { scroll-behavior: smooth; }
+
+/* WordPress Headless Gutenberg Styles */
+.prose-wp {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 300;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+@media (min-width: 768px) {
+  .prose-wp {
+    font-size: 1.125rem;
+  }
+}
+.prose-wp p {
+  margin-bottom: 1.75rem;
+}
+.prose-wp p:last-child {
+  margin-bottom: 0;
+}
+.prose-wp h2,
+.prose-wp h3,
+.prose-wp h4 {
+  color: #ffffff;
+  font-weight: 200;
+  line-height: 1.25;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+.prose-wp h2 { font-size: 1.875rem; }
+.prose-wp h3 { font-size: 1.5rem; }
+.prose-wp h4 { font-size: 1.25rem; }
+@media (min-width: 768px) {
+  .prose-wp h2 { font-size: 2.25rem; }
+  .prose-wp h3 { font-size: 1.75rem; }
+}
+.prose-wp a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+.prose-wp a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-bottom-color: #ffffff;
+}
+.prose-wp ul,
+.prose-wp ol {
+  margin-bottom: 1.75rem;
+  padding-left: 1.5rem;
+}
+.prose-wp ul {
+  list-style-type: square;
+}
+.prose-wp ol {
+  list-style-type: decimal;
+}
+.prose-wp li {
+  margin-bottom: 0.5rem;
+}
+.prose-wp blockquote {
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 2rem 0;
+}
+.prose-wp blockquote p {
+  margin-bottom: 0;
+}
+.prose-wp img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 2.5rem 0;
+  display: block;
+}
+.prose-wp figure {
+  margin: 2.5rem 0;
+}
+.prose-wp figure img {
+  margin: 0;
+}
+.prose-wp figcaption {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+.prose-wp iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  margin: 2.5rem 0;
+}
+.prose-wp .wp-block-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+@media (min-width: 768px) {
+  .prose-wp .wp-block-columns {
+    flex-direction: row;
+  }
+}
+.prose-wp .wp-block-column {
+  flex: 1;
+}
+

@@ -43,9 +43,6 @@ export function Sectors() {
               .
             </h2>
           </Reveal>
-          <Reveal delay={180}>
-            <CtaLink to="/portfolio">Browse the portfolio</CtaLink>
-          </Reveal>
         </div>
 
         <div className="md:col-span-8 grid sm:grid-cols-2 gap-x-12">
@@ -72,17 +69,14 @@ function SectorList({
         const n = String(startIndex + i * step).padStart(2, "0");
         return (
           <Reveal key={label} delay={i * 70} as="li">
-            <a
-              href="#"
-              className="group flex items-center justify-between border-b border-white/15 py-5 text-white transition-colors duration-300 hover:border-white/40"
-            >
+            <div className="group flex items-center justify-between border-b border-white/15 py-5 text-white transition-colors duration-300 hover:border-white/40 select-none">
               <span className="font-light text-lg md:text-xl transition-transform duration-500 group-hover:translate-x-1.5">
                 {label}
               </span>
               <span className="text-white/45 text-xs tracking-[0.3em] transition-colors duration-300 group-hover:text-white/80">
                 {n}
               </span>
-            </a>
+            </div>
           </Reveal>
         );
       })}

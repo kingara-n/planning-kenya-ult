@@ -9,26 +9,32 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { getAdventure, adventures } from "@/data/adventures";
+import { fetchLiveAdventureBySlug, fetchLiveAdventures } from "@/services/wordpress";
 
 export const Route = createFileRoute("/adventure/$slug")({
-  loader: ({ params }) => {
-    const post = getAdventure(params.slug);
+  loader: async ({ params }) => {
+    const [post, allPosts] = await Promise.all([
+      fetchLiveAdventureBySlug(params.slug),
+      fetchLiveAdventures(),
+    ]);
     if (!post) throw notFound();
-    return post;
+    
+    const others = allPosts.filter((a) => a.slug !== post.slug).slice(0, 2);
+    return { post, others };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "Story — Planning Kenya" }] };
     }
+    const { post } = loaderData;
     return {
       meta: [
-        { title: `${loaderData.title} — Planning Kenya` },
-        { name: "description", content: loaderData.excerpt },
-        { property: "og:title", content: `${loaderData.title} — Planning Kenya` },
-        { property: "og:description", content: loaderData.excerpt },
-        { property: "og:image", content: loaderData.cover },
-        { name: "twitter:image", content: loaderData.cover },
+        { title: `${post.title} — Planning Kenya` },
+        { name: "description", content: post.excerpt },
+        { property: "og:title", content: `${post.title} — Planning Kenya` },
+        { property: "og:description", content: post.excerpt },
+        { property: "og:image", content: post.cover },
+        { name: "twitter:image", content: post.cover },
       ],
     };
   },
@@ -61,8 +67,7 @@ export const Route = createFileRoute("/adventure/$slug")({
 });
 
 function PostPage() {
-  const post = Route.useLoaderData();
-  const others = adventures.filter((a) => a.slug !== post.slug).slice(0, 2);
+  const { post, others } = Route.useLoaderData();
 
   return (
     <main className="bg-background min-h-screen text-white">
@@ -100,9 +105,16 @@ function PostPage() {
 
         <Reveal delay={200}>
           <div className="mt-12 space-y-7 text-white/80 font-light leading-relaxed text-base md:text-lg">
-            {post.body.map((p: string, i: number) => (
-              <p key={i}>{p}</p>
-            ))}
+            {Array.isArray(post.body) ? (
+              post.body.map((p: string, i: number) => (
+                <p key={i}>{p}</p>
+              ))
+            ) : (
+              <div 
+                className="prose-wp"
+                dangerouslySetInnerHTML={{ __html: post.body }}
+              />
+            )}
           </div>
         </Reveal>
       </article>

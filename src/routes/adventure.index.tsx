@@ -2,9 +2,10 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
-import { adventures } from "@/data/adventures";
+import { fetchLiveAdventures } from "@/services/wordpress";
 
 export const Route = createFileRoute("/adventure/")({
+  loader: () => fetchLiveAdventures(),
   component: Page,
   head: () => ({
     meta: [
@@ -24,6 +25,27 @@ export const Route = createFileRoute("/adventure/")({
 });
 
 function Page() {
+  const adventures = Route.useLoaderData();
+  
+  if (!adventures || adventures.length === 0) {
+    return (
+      <main className="bg-background min-h-screen text-white">
+        <Nav />
+        <section className="px-8 md:px-16 pt-40 pb-20 max-w-6xl">
+          <Reveal>
+            <p className="text-sm tracking-[0.3em] text-white/60 mb-6">
+              OUR ADVENTURES — PLANNING NEWS FEED
+            </p>
+            <h1 className="text-5xl md:text-7xl font-thin leading-[1.05] mb-8">
+              No stories found.
+            </h1>
+          </Reveal>
+        </section>
+        <Footer />
+      </main>
+    );
+  }
+
   const [featured, ...rest] = adventures;
 
   return (
