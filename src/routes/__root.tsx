@@ -87,7 +87,11 @@ function RootComponent() {
   const pathname = routerState.location.pathname;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant"
+    });
     if ((window as any).__lenis) {
       (window as any).__lenis.scrollTo(0, { immediate: true });
     }
