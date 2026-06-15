@@ -145,6 +145,10 @@
     border-color: var(--color-border);
   }
 
+  html {
+    font-size: 75%; /* Scales down all rem-based units by 25% globally */
+  }
+
   html, body {
     font-family: 'Montserrat', 'Inter', system-ui, -apple-system, sans-serif;
     background-image: linear-gradient(to bottom, oklch(0.65 0.14 254.5) 0%, var(--background-deep) 100%);

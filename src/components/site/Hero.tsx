@@ -16,7 +16,7 @@ export function Hero() {
 
 
       <Reveal delay={300} y={20} className="absolute bottom-12 left-8 md:left-12 max-w-xs">
-        <p className="text-white/85 text-sm font-light leading-relaxed">
+        <p className="text-white/85 text-xs font-light leading-snug">
           We are crafting spaces and creating meaningful experiences through the Power of Architecture.
         </p>
       </Reveal>

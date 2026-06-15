@@ -117,13 +117,13 @@ export function Nav() {
         </Link>
         
         {/* Desktop Nav */}
-        <ul className="hidden lg:flex items-center gap-1">
+        <ul className="hidden lg:flex items-center gap-0.5">
           {links.map((l) => (
             <li key={l.label}>
               <Link
                 to={l.to}
                 onClick={pressGlow}
-                className="pk-glass-hover inline-block border border-transparent rounded-full px-4 py-2 text-sm text-white/90 hover:text-white whitespace-nowrap font-light"
+                className="pk-glass-hover inline-block border border-transparent rounded-full px-3.5 py-1.5 text-xs text-white/90 hover:text-white whitespace-nowrap font-light"
               >
                 {l.label}
               </Link>
@@ -133,7 +133,7 @@ export function Nav() {
         <Link
           to="/contact"
           onClick={pressGlow}
-          className="pk-glass-hover hidden lg:inline-flex items-center border border-white/70 rounded-full px-6 md:px-8 py-3 md:py-4 text-lg md:text-xl uppercase tracking-[0.22em] font-light text-white whitespace-nowrap"
+          className="pk-glass-hover hidden lg:inline-flex items-center border border-white/70 rounded-full px-5 md:px-6 py-2.5 md:py-3.5 text-sm md:text-base uppercase tracking-[0.2em] font-light text-white whitespace-nowrap"
         >
           Contact Us
         </Link>
