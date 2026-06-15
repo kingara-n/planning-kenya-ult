@@ -11,7 +11,7 @@ export type Adventure = {
 
 export const adventures: Adventure[] = [
   {
-    slug: "growth-through-innovation-and-cross-cultural-exchange",
+    slug: "building-bridges-sweden",
     title: "Growth Through Innovation and Cross-Cultural Exchange",
     date: "September 2024",
     location: "Sweden · Woodlife Sweden Study Tour",
@@ -57,7 +57,7 @@ export const adventures: Adventure[] = [
     ],
   },
   {
-    slug: "megawra",
+    slug: "reimagining-heritage-egypt",
     title: "Megawra",
     date: "September 2023",
     location: "Cairo · Aga Khan Award Ceremony",

@@ -3,9 +3,13 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X, ArrowRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import { Link } from "@tanstack/react-router";
-import { departments, Member } from "@/data/team";
+import { departments as staticDepartments, Member } from "@/data/team";
 
-export function Team() {
+interface TeamProps {
+  departments?: typeof staticDepartments;
+}
+
+export function Team({ departments = staticDepartments }: TeamProps) {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
   return (

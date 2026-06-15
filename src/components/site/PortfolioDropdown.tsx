@@ -1,13 +1,14 @@
 import * as Popover from "@radix-ui/react-popover";
 import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { categories } from "@/data/portfolio";
+import { categories as staticCategories } from "@/data/portfolio";
 
 type Props = {
   variant?: "nav" | "page";
+  categories?: typeof staticCategories;
 };
 
-export function PortfolioDropdown({ variant = "nav" }: Props) {
+export function PortfolioDropdown({ variant = "nav", categories = staticCategories }: Props) {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
 

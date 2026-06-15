@@ -9,7 +9,10 @@ import { Sectors } from "@/components/site/Sectors";
 import { Footer } from "@/components/site/Footer";
 import { ContactCta } from "@/components/site/ContactCta";
 
+import { fetchLiveProjects } from "@/services/wordpress";
+
 export const Route = createFileRoute("/")({
+  loader: () => fetchLiveProjects(),
   component: Index,
   head: () => ({
     meta: [
@@ -24,6 +27,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const categories = Route.useLoaderData();
   return (
     <main className="bg-background min-h-screen">
       <Nav />
@@ -31,7 +35,7 @@ function Index() {
       <About />
       <Divisions />
       <Sectors />
-      <Projects />
+      <Projects categories={categories} />
       <Stats />
       <ContactCta />
       <Footer />

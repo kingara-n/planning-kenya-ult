@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Reveal } from "./Reveal";
 import { CtaLink } from "./CtaLink";
-import { getProject } from "@/data/portfolio";
+import { categories as staticCategories } from "@/data/portfolio";
 
 type FeaturedRef = {
   categorySlug: string;
@@ -16,11 +16,12 @@ const featured: FeaturedRef[] = [
   { categorySlug: "masterplanning", projectSlug: "tatu-city-masterplan", span: "wide" },
 ];
 
-export function Projects() {
+export function Projects({ categories = staticCategories }: { categories?: typeof staticCategories }) {
   const items = featured
     .map((f) => {
-      const r = getProject(f.categorySlug, f.projectSlug);
-      return r ? { ...r, span: f.span } : null;
+      const cat = categories.find((c) => c.slug === f.categorySlug);
+      const proj = cat?.projects.find((p) => p.slug === f.projectSlug);
+      return proj ? { project: proj, category: cat!, span: f.span } : null;
     })
     .filter((x): x is NonNullable<typeof x> => x !== null);
 

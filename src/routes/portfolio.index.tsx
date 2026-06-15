@@ -3,9 +3,10 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { PortfolioDropdown } from "@/components/site/PortfolioDropdown";
-import { categories } from "@/data/portfolio";
+import { fetchLiveProjects } from "@/services/wordpress";
 
 export const Route = createFileRoute("/portfolio/")({
+  loader: () => fetchLiveProjects(),
   component: Page,
   head: () => ({
     meta: [
@@ -26,6 +27,7 @@ export const Route = createFileRoute("/portfolio/")({
 });
 
 function Page() {
+  const categories = Route.useLoaderData();
   return (
     <main className="bg-background min-h-screen text-white">
       <Nav />
@@ -53,7 +55,7 @@ function Page() {
 
         <div className="mt-12 flex justify-center">
           <Reveal delay={200}>
-            <PortfolioDropdown variant="page" />
+            <PortfolioDropdown variant="page" categories={categories} />
           </Reveal>
         </div>
       </section>

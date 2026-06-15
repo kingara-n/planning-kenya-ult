@@ -6,7 +6,7 @@ import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { ProjectSlideshow } from "@/components/site/ProjectSlideshow";
-import { getProject } from "@/data/portfolio";
+import { fetchLiveProjectBySlug } from "@/services/wordpress";
 
 const formatProjectDetails = (text: string) => {
   // Clean up corrupted encoding characters from legacy imports
@@ -41,8 +41,8 @@ const formatProjectDetails = (text: string) => {
 };
 
 export const Route = createFileRoute("/portfolio/$category/$project")({
-  loader: ({ params }) => {
-    const result = getProject(params.category, params.project);
+  loader: async ({ params }) => {
+    const result = await fetchLiveProjectBySlug(params.category, params.project);
     if (!result) throw notFound();
     return result;
   },

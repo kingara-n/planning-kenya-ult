@@ -69,14 +69,14 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <Scripts />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer />
-        <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+        <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.addEventListener('load',function(){(function init(){if(!window.Lenis||!window.gsap||!window.ScrollTrigger){return setTimeout(init,50);}var gsap=window.gsap;gsap.registerPlugin(window.ScrollTrigger);var lenis=new window.Lenis({duration:1.2,easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},smoothWheel:true});lenis.on('scroll',window.ScrollTrigger.update);gsap.ticker.add(function(time){lenis.raf(time*1000);});gsap.ticker.lagSmoothing(0);window.__lenis=lenis;})();});`,
           }}
-        />
+        ></script>
       </body>
     </html>
   );

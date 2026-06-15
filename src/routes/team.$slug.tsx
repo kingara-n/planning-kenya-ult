@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { getTeamMember } from "@/data/team";
+import { fetchLiveTeamMemberBySlug } from "@/services/wordpress";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
@@ -13,8 +13,8 @@ import {
 } from "lucide-react";
 
 export const Route = createFileRoute("/team/$slug")({
-  loader: ({ params }) => {
-    const member = getTeamMember(params.slug);
+  loader: async ({ params }) => {
+    const member = await fetchLiveTeamMemberBySlug(params.slug);
     if (!member) throw notFound();
     return member;
   },

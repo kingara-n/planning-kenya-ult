@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Team } from "@/components/site/Team";
+import { fetchLiveTeam } from "@/services/wordpress";
 import React from "react";
 
 export const Route = createFileRoute("/team/")({
+  loader: () => fetchLiveTeam(),
   component: Page,
   head: () => ({
     meta: [
@@ -15,10 +17,11 @@ export const Route = createFileRoute("/team/")({
 });
 
 function Page() {
+  const departments = Route.useLoaderData();
   return (
     <main className="bg-background min-h-screen text-white">
       <Nav />
-      <Team />
+      <Team departments={departments} />
       <Footer />
     </main>
   );

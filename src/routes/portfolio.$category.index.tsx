@@ -1,14 +1,19 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Nav } from "@/components/site/Nav";
 import { Footer } from "@/components/site/Footer";
 import { Reveal } from "@/components/site/Reveal";
 import { PortfolioDropdown } from "@/components/site/PortfolioDropdown";
-import { getCategory, type Project } from "@/data/portfolio";
+import { type Project } from "@/data/portfolio";
+import { fetchLiveCategoryBySlug, fetchLiveProjects } from "@/services/wordpress";
 
 export const Route = createFileRoute("/portfolio/$category/")({
-  loader: ({ params }) => {
-    const category = getCategory(params.category)!;
-    return { category };
+  loader: async ({ params }) => {
+    const [category, categories] = await Promise.all([
+      fetchLiveCategoryBySlug(params.category),
+      fetchLiveProjects()
+    ]);
+    if (!category) throw notFound();
+    return { category, categories };
   },
   head: ({ loaderData }) => {
     const c = loaderData?.category;
@@ -27,7 +32,7 @@ export const Route = createFileRoute("/portfolio/$category/")({
 });
 
 function Page() {
-  const { category } = Route.useLoaderData();
+  const { category, categories } = Route.useLoaderData();
 
   return (
     <main className="bg-background min-h-screen text-white">
@@ -59,7 +64,7 @@ function Page() {
 
         <div className="mt-12 flex justify-center">
           <Reveal delay={200}>
-            <PortfolioDropdown variant="page" />
+            <PortfolioDropdown variant="page" categories={categories} />
           </Reveal>
         </div>
       </section>
